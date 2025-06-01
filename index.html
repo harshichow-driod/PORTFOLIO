@@ -703,8 +703,85 @@
     }
 
     @media (max-width: 768px) {
+      .profile-container {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+      }
+
+      .profile-info {
+        text-align: center;
+      }
+
+      .profile-stats {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .profile-social-links {
+        justify-content: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
       nav .nav-container {
         flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+      }
+
+      nav a {
+        padding: 0.5rem 1rem;
+        width: 100%;
+        justify-content: center;
+        border-bottom: 1px solid var(--color-border-default);
+      }
+
+      nav .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: var(--color-bg-secondary);
+        border: 1px solid var(--color-border-default);
+        border-top: none;
+        z-index: 99;
+      }
+
+      nav .nav-links.active {
+        display: flex;
+      }
+
+      #nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        width: auto;
+        align-self: flex-start;
+        margin-left: 1rem;
+        background-color: var(--color-bg-tertiary);
+        border-color: var(--color-border-default);
+      }
+
+      #theme-toggle {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 0;
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid var(--color-border-default);
       }
       
       .card {
@@ -739,6 +816,59 @@
 
       footer {
         padding: 1.25rem 1rem;
+      }
+
+      #skills {
+        padding: 1.5rem 1rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #languages {
+        padding: 1.5rem 1rem;
+      }
+
+      .language-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #about {
+        padding: 1.5rem 1rem;
+      }
+
+      #about p {
+        font-size: 0.875rem;
+      }
+
+      #about .about-intro-text {
+        font-size: 1rem;
+      }
+    }
+
+    @media (min-width: 769px) {
+      #nav-toggle {
+        display: none;
+      }
+
+      nav .nav-links {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        position: static;
+        border: none;
+        background-color: transparent;
+      }
+
+      #theme-toggle {
+         margin-left: 1rem;
+         width: auto;
+         margin-top: 0;
+         padding: 0.5rem 0.75rem;
+         border-top: none;
+         display: inline-flex;
+         justify-content: center;
       }
     }
 
@@ -1040,15 +1170,20 @@
 
   <nav>
     <div class="nav-container">
-      <a href="#about" class="active"><i class="fas fa-user"></i> About</a>
-      <a href="#education"><i class="fas fa-graduation-cap"></i> Education</a>
-      <a href="#projects"><i class="fas fa-code"></i> Projects</a>
-      <a href="#experience"><i class="fas fa-briefcase"></i> Experience</a>
-      <a href="#skills"><i class="fas fa-tools"></i> Skills</a>
-      <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
-      <button id="theme-toggle" class="btn" aria-label="Toggle Theme">
-        <i class="fas fa-sun"></i>
+      <button id="nav-toggle" class="btn" aria-label="Toggle Navigation Menu">
+        <i class="fas fa-bars"></i>
       </button>
+      <div class="nav-links">
+        <a href="#about" class="active"><i class="fas fa-user"></i> About</a>
+        <a href="#education"><i class="fas fa-graduation-cap"></i> Education</a>
+        <a href="#projects"><i class="fas fa-code"></i> Projects</a>
+        <a href="#experience"><i class="fas fa-briefcase"></i> Experience</a>
+        <a href="#skills"><i class="fas fa-tools"></i> Skills</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+        <button id="theme-toggle" class="btn" aria-label="Toggle Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -1156,8 +1291,8 @@
           <h3 class="project-title"><i class="fas fa-eye"></i> Object Detection System</h3>
           <div class="project-meta">
             <span><i class="fas fa-calendar"></i> Jun 2024 - Nov 2024</span>
-          </div>
-        </div>
+    </div>
+    </div>
         <p class="project-description">Developed an object detection system using YOLO (You Only Look Once) for real-time image analysis. Trained the model on a custom dataset to identify and classify multiple objects with high accuracy. Achieved 85% accuracy and deployed the model for real-time object detection.</p>
         <div class="project-actions">
           <button class="btn"><i class="fas fa-code"></i> View Code</button>
@@ -1204,7 +1339,7 @@
           <p class="timeline-description">Currently working as a Software Engineer Intern at Capgemini, contributing to enterprise-level software development projects and gaining hands-on experience in professional software engineering practices.</p>
           <div class="timeline-meta">
             <span><i class="fas fa-calendar"></i> Present</span>
-          </div>
+    </div>
         </div>
       </div>
       <div class="timeline-item">
@@ -1460,6 +1595,32 @@
                 behavior: 'smooth'
             });
         });
+    });
+
+    // --- Navigation Dropdown Script ---
+    const navToggleBtn = document.getElementById('nav-toggle');
+    const navLinksDiv = document.querySelector('.nav-links');
+
+    navToggleBtn.addEventListener('click', () => {
+      navLinksDiv.classList.toggle('active');
+    });
+
+    // Close the dropdown when a link is clicked (optional but good UX)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navLinksDiv.classList.contains('active')) {
+          navLinksDiv.classList.remove('active');
+        }
+      });
+    });
+
+    // Close the dropdown when clicking outside of it (optional)
+    document.addEventListener('click', (event) => {
+      const isClickInsideNav = document.querySelector('nav').contains(event.target);
+      const isToggleBtn = navToggleBtn.contains(event.target);
+      if (!isClickInsideNav && navLinksDiv.classList.contains('active') && !isToggleBtn) {
+        navLinksDiv.classList.remove('active');
+      }
     });
 
   </script>
